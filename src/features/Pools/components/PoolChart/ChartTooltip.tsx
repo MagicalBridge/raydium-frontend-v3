@@ -1,0 +1,34 @@
+import { Box } from '@chakra-ui/react'
+import { TooltipProps } from 'recharts'
+
+import { toUTC } from '@/utils/date'
+import { formatCurrency } from '@/utils/numberish/formatter'
+import { colors } from '@/theme/cssVariables'
+
+type ValueType = number | string | Array<number | string>
+type NameType = number | string
+
+export default function ChartTooltip({ active, payload, label, category }: TooltipProps<ValueType, NameType> & { category?: string }) {
+  const unit = 'USD'
+  if (active && payload && payload.length) {
+    return (
+      <Box bg={colors.backgroundLight} rounded="12px" px="14px" py={3}>
+        <Box color={colors.textTertiary} fontSize="xs">
+          {category}
+        </Box>
+        {payload.map((item, idx) => {
+          return (
+            <Box key={`payload-${item.name}-${idx}`} color={colors.textPrimary} fontSize="16px">
+              <Box>{`${formatCurrency(item.value as string, { symbol: '$', decimalPlaces: 2 })} ${unit}`}</Box>
+            </Box>
+          )
+        })}
+        <Box color={colors.textTertiary} fontSize="xs">
+          {toUTC(label, { showTime: false, showUTCBadge: false })}
+        </Box>
+      </Box>
+    )
+  }
+
+  return null
+}
