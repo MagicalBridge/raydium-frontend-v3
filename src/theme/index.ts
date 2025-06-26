@@ -29,8 +29,8 @@ import { breakpoints } from './foundations/breakpoints'
 import { radii } from './foundations/radii'
 
 const config: ThemeConfig = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false
+  initialColorMode: 'dark', // 初始化颜色模式为暗色
+  useSystemColorMode: false // 禁用系统颜色模式
 }
 
 export const theme = extendTheme({
