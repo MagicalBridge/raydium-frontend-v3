@@ -31,6 +31,7 @@ Decimal.set({ precision: 1e3 })
 const MyApp = ({ Component, pageProps, ...props }: AppProps) => {
   const { pathname } = useRouter()
 
+  // 这里使用了useMemo，当pathname发生变化时，重新计算onlyContent和overflowHidden的值
   const [onlyContent, overflowHidden] = useMemo(
     () => [CONTENT_ONLY_PATH.includes(pathname), OVERFLOW_HIDDEN_PATH.includes(pathname)],
     [pathname]
