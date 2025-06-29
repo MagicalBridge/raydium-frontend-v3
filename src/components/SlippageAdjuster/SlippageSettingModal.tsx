@@ -39,9 +39,12 @@ export function SlippageSettingModal(props: { variant: 'swap' | 'liquidity'; isO
     setCurrentSlippage(String(val))
   })
   const handleUpdateSlippage = useEvent((val: string | number) => {
+    // 将输入的值转换为小数，并除以100得到实际的slippage值
     const setVal = Number(val ?? 0) / 100
+    // 将slippage值存储到本地存储中
     setStorageItem(SLIPPAGE_KEY, setVal)
     if (isSwap) {
+      // 第一个参数是状态值，第二个参数是是否强制更新，第三个参数是更新类型
       useSwapStore.setState({ slippage: setVal }, false, { type: 'SlippageToleranceSettingField' })
     } else {
       useLiquidityStore.setState({ slippage: setVal }, false, { type: 'SlippageToleranceSettingField' })

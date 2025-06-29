@@ -15,6 +15,7 @@ export const resetAllStore = (props?: { [key: string]: Record<string, any> }) =>
 declare type Get<T, K, F = never> = K extends keyof T ? T[K] : F
 
 type MiddleWares = [['zustand/devtools', never], ['zustand/immer', never]]
+
 const createStore = <T>(
   fn: (
     setState: Get<Mutate<StoreApi<T>, MiddleWares>, 'setState', undefined>,

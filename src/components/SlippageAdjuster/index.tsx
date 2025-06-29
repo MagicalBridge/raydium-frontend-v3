@@ -23,9 +23,11 @@ export function SlippageAdjuster({ variant = 'swap', onClick }: { variant?: 'swa
     const warn = isSwap && (slippageDecimal.gt('0.5') || slippageDecimal.lt('0.1'))
     setIsWarn(warn)
   }, [slippage, isSwap])
+
   const handleOnClick = () => {
     onToggle()
   }
+
   return (
     <>
       <Flex align="center" onClick={onClick || handleOnClick}>
