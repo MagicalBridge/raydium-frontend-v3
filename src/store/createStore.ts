@@ -1,19 +1,22 @@
 import create, { Mutate, StoreApi } from 'zustand'
-import { devtools } from 'zustand/middleware'
-import { immer } from 'zustand/middleware/immer'
+import { devtools } from 'zustand/middleware' // 用于 Redux DevTools 调试
+import { immer } from 'zustand/middleware/immer' // 用于不可变状态更新
 
 const storeResetter: {
   name?: string
   reset: (replaceState?: Record<string, any>) => void
 }[] = []
 
+// 函数可以一次性重置所有 store 或部分 store
 // e.g. resetAllStore({ useAppStore: { raydium: useAppStore.getState().raydium, rpcNodeUrl: 'https://xxx' } })
 export const resetAllStore = (props?: { [key: string]: Record<string, any> }) => {
   storeResetter.forEach((f) => f.reset(f.name && props ? props[f.name] : undefined))
 }
 
+// 工具类型，用于安全地获取对象属性
 declare type Get<T, K, F = never> = K extends keyof T ? T[K] : F
 
+// 定义使用的中间件类型
 type MiddleWares = [['zustand/devtools', never], ['zustand/immer', never]]
 
 const createStore = <T>(
@@ -36,26 +39,6 @@ const createStore = <T>(
         }
 
         return fn(logSet, get, store, $$storeMutations)
-
-        // maybe need while try to catch all tx
-        // const storeState = fn(logSet, get, store, $$storeMutations)
-        // const newState = { ...storeState }
-
-        // /* eslint-disable */
-        // /* @ts-ignore */
-        // Object.keys(newState).forEach((key) => {
-        //   /* @ts-ignore */
-        //   if (typeof newState[key] === 'function') {
-        //     /* @ts-ignore */
-        //     newState[key] = (...props: any) => {
-        //       if (key.indexOf('Act') !== -1) console.log( 'call', key)
-        //       /* @ts-ignore */
-        //       return storeState[key].bind({})(...props)
-        //     }
-        //   }
-        // })
-        // /* eslint-enable */
-        // return newState
       }),
 
       name ? { name } : undefined
