@@ -135,6 +135,7 @@ export default function Swap() {
       >
         <GridItem gridArea="controls">
           <HStack justifyContent="space-between" my={[1, 0]}>
+            {/* MoonpayBuy sdk && card buy icon */}
             <MoonpayBuy>
               <HStack gap={1}>
                 <CreditCardIcon />
@@ -143,7 +144,9 @@ export default function Swap() {
                 </Text>
               </HStack>
             </MoonpayBuy>
+
             <HStack>
+              {/* slippage adjuster */}
               <SlippageAdjuster />
               <Tooltip
                 label={t('swap.blink_referral_desc', {
@@ -154,6 +157,7 @@ export default function Swap() {
                   cursor="pointer"
                   opacity={isBlinkReferralActive ? 1 : 0.6}
                   onClick={() => {
+                    // blink referral 
                     if (isBlinkReferralActive) {
                       onCopy()
                       toastSubject.next({
@@ -167,6 +171,7 @@ export default function Swap() {
                 </Box>
               </Tooltip>
 
+              {/* pc 端，可以切换chart方向，默认是左，点击后，切换到右 */}
               {!isMobile && isPCChartShown && (
                 <Box
                   cursor="pointer"
@@ -177,6 +182,7 @@ export default function Swap() {
                   <SwapExchangeIcon />
                 </Box>
               )}
+
               <Box
                 cursor="pointer"
                 onClick={() => {
@@ -198,6 +204,8 @@ export default function Swap() {
             </HStack>
           </HStack>
         </GridItem>
+
+        {/* swap 核心组件，输入输出token，swap 按钮 */}
         <GridItem ref={swapPanelRef} gridArea="panel">
           <PanelCard p={[3, 6]} flexGrow={['1', 'unset']}>
             <SwapPanel
