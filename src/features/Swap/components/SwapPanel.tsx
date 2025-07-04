@@ -46,17 +46,21 @@ import QuestionCircleIcon from '@/icons/misc/QuestionCircleIcon'
 import Tooltip from '@/components/Tooltip'
 
 export function SwapPanel({
-  onInputMintChange,
-  onOutputMintChange,
-  onDirectionNeedReverse
+  onInputMintChange, // 输入代币变化回调
+  onOutputMintChange, // 输出代币变化回调
+  onDirectionNeedReverse // 方向需要反转回调
 }: {
   onInputMintChange?: (mint: string) => void
   onOutputMintChange?: (mint: string) => void
   onDirectionNeedReverse?(): void
 }) {
+  // 组件启动时候：
+  // 从url查询参数中获取输入和输出代币的地址
   const query = useRouteQuery<{ inputMint: string; outputMint: string }>()
   const [urlInputMint, urlOutputMint] = [urlToMint(query.inputMint), urlToMint(query.outputMint)]
+  // 从缓存中获取上次选择的代币对
   const { inputMint: cacheInput, outputMint: cacheOutput } = getSwapPairCache()
+  // 优先使用url参数中的，其次使用缓存的值
   const [defaultInput, defaultOutput] = [urlInputMint || cacheInput, urlOutputMint || cacheOutput]
 
   const { t, i18n } = useTranslation()
@@ -85,29 +89,29 @@ export function SwapPanel({
   const { tokenInfo: unknownTokenA } = useTokenInfo({
     mint: isTokenLoaded && !tokenInput && inputMint ? inputMint : undefined
   })
-  const tokenAActionRef = useRef<InputActionRef>({ refreshPrice: () => {} })
+  const tokenAActionRef = useRef<InputActionRef>({ refreshPrice: () => { } })
   const { tokenInfo: unknownTokenB } = useTokenInfo({
     mint: isTokenLoaded && !tokenOutput && outputMint ? outputMint : undefined
   })
-  const tokenBActionRef = useRef<InputActionRef>({ refreshPrice: () => {} })
+  const tokenBActionRef = useRef<InputActionRef>({ refreshPrice: () => { } })
 
   const { tokenInfo: inputInfo } = useTokenInfo(
     tokenInput?.type === 'jupiter'
       ? {
-          mint: tokenInput.address,
-          programId: ToPublicKey(tokenInput.programId),
-          skipTokenMap: true
-        }
+        mint: tokenInput.address,
+        programId: ToPublicKey(tokenInput.programId),
+        skipTokenMap: true
+      }
       : {}
   )
 
   const { tokenInfo: outputInfo } = useTokenInfo(
     tokenOutput?.type === 'jupiter'
       ? {
-          mint: tokenOutput.address,
-          programId: ToPublicKey(tokenOutput.programId),
-          skipTokenMap: true
-        }
+        mint: tokenOutput.address,
+        programId: ToPublicKey(tokenOutput.programId),
+        skipTokenMap: true
+      }
       : {}
   )
   const [inputFeeConfig, outputFeeConfig] = [
