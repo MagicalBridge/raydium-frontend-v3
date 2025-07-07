@@ -33,8 +33,8 @@ import useRefreshEpochInfo from '@/hooks/app/useRefreshEpochInfo'
 
 export default function Swap() {
   // const { inputMint: cacheInput, outputMint: cacheOutput } = getSwapPairCache()
-  const [inputMint, setInputMint] = useState<string>(PublicKey.default.toBase58())
-  const [outputMint, setOutputMint] = useState<string>(RAYMint.toBase58())
+  const [inputMint, setInputMint] = useState<string>(PublicKey.default.toBase58()) // 输入代币，默认是SOLMint
+  const [outputMint, setOutputMint] = useState<string>(RAYMint.toBase58()) // 输出代币，默认是RAYMint
   const [isPCChartShown, setIsPCChartShown] = useState<boolean>(true)
   const [isMobileChartShown, setIsMobileChartShown] = useState<boolean>(false)
   const [isChartLeft, setIsChartLeft] = useState<boolean>(true)

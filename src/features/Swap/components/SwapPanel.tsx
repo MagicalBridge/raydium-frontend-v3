@@ -337,11 +337,12 @@ export function SwapPanel({
 
   return (
     <>
+      {/* 移动端 和 PC 端的 margin-bottom 分别是16px 还有20px  */}
       <Flex mb={[4, 5]} direction="column">
         {/* input */}
         <TokenInput
           name="swap"
-          topLeftLabel={t('swap.from_label')}
+          topLeftLabel={t('swap.from_label')} // 这个就是 From 的字段
           ctrSx={getCtrSx('BaseIn')}
           token={tokenInput}
           value={isSwapBaseIn ? amountIn : inputAmount}
@@ -357,7 +358,7 @@ export function SwapPanel({
         {/* output */}
         <TokenInput
           name="swap"
-          topLeftLabel={t('swap.to_label')}
+          topLeftLabel={t('swap.to_label')} // 这个就是 To 显示的字段
           ctrSx={getCtrSx('BaseOut')}
           token={tokenOutput}
           value={isSwapBaseIn ? outputAmount : amountIn}
